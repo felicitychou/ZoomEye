@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# coding=utf-8
+
 #from ZoomEye_use_requests import *
 from ZoomEye import *
 
@@ -31,4 +34,7 @@ def main(username,password):
         print z.error()
 
 if __name__ == '__main__':
-    main(username='',password='')
+    #main(username='',password='')
+    username = raw_input('Please input your username:')
+    password = raw_input('Please input your password:')
+    main(username=username,password=password)
