@@ -1,3 +1,4 @@
+#from ZoomEye_use_requests import *
 from ZoomEye import *
 
 HostSearchFacets = "app,device,service,os,port,country,city"

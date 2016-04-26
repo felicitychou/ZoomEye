@@ -1,4 +1,4 @@
-import req
+import requests
 
 class ZoomEye(object):
     def __init__(self, username, password):
@@ -13,7 +13,7 @@ class ZoomEye(object):
         self.r = None
 
     def requestisok(self):
-        if self.r.status_code in (200,201):
+        if self.r.status_code == requests.codes.ok:
             return True
         else:
             return False
@@ -22,9 +22,12 @@ class ZoomEye(object):
         json = self.r.json()
         return "Error:" + str(self.r.status_code) + "\t" + json['error'] + "\n" + json['message'] + "\n" + json['url'] + "\n"
 
+    def payload(self, query, page, facets):
+        return {'query': query, 'page': page, 'facets': facets}
+
     def login(self):
-        self.r = req.post('http://api.zoomeye.org/user/login',
-                               params={"username": self.username, "password": self.password})
+        self.r = requests.post('http://api.zoomeye.org/user/login',
+                               json={"username": self.username, "password": self.password})
         if self.requestisok():
             self.access_token += self.r.json()['access_token']
             return True
@@ -33,17 +36,19 @@ class ZoomEye(object):
 
     def resourcesinfo(self):
         headers = {'Authorization': self.access_token}
-        self.r = req.get('http://api.zoomeye.org/resources-info', headers=headers)
+        self.r = requests.get('http://api.zoomeye.org/resources-info', headers=headers)
         return self.requestisok()
 
     def hostsearch(self, query, page=1, facets=''):
         headers = {'Authorization': self.access_token}
-        self.r = req.get("http://api.zoomeye.org/host/search", headers=headers, params={'query': query, 'page': page, 'facets': facets})
+        payload = self.payload(query, page, facets)
+        self.r = requests.get("http://api.zoomeye.org/host/search", headers=headers, params=payload)
         return self.requestisok()
 
     def websearch(self, query, page=1, facets=''):
         headers = {'Authorization': self.access_token}
-        self.r = req.get("http://api.zoomeye.org/web/search", headers=headers, params={'query': query, 'page': page, 'facets': facets})
+        payload = self.payload(query, page, facets)
+        self.r = requests.get("http://api.zoomeye.org/web/search", headers=headers, params=payload)
         return self.requestisok()
 
     def response(self):
