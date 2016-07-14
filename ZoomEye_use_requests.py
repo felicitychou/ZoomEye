@@ -29,7 +29,7 @@ class ZoomEye(object):
         return {'query': query, 'page': page, 'facets': facets}
 
     def login(self):
-        self.r = requests.post('http://api.zoomeye.org/user/login',
+        self.r = requests.post('https://api.zoomeye.org/user/login',
                                json={"username": self.username, "password": self.password})
         if self.requestisok():
             self.access_token += self.r.json()['access_token']
@@ -39,19 +39,19 @@ class ZoomEye(object):
 
     def resourcesinfo(self):
         headers = {'Authorization': self.access_token}
-        self.r = requests.get('http://api.zoomeye.org/resources-info', headers=headers)
+        self.r = requests.get('https://api.zoomeye.org/resources-info', headers=headers)
         return self.requestisok()
 
     def hostsearch(self, query, page=1, facets=''):
         headers = {'Authorization': self.access_token}
         payload = self.payload(query, page, facets)
-        self.r = requests.get("http://api.zoomeye.org/host/search", headers=headers, params=payload)
+        self.r = requests.get("https://api.zoomeye.org/host/search", headers=headers, params=payload)
         return self.requestisok()
 
     def websearch(self, query, page=1, facets=''):
         headers = {'Authorization': self.access_token}
         payload = self.payload(query, page, facets)
-        self.r = requests.get("http://api.zoomeye.org/web/search", headers=headers, params=payload)
+        self.r = requests.get("https://api.zoomeye.org/web/search", headers=headers, params=payload)
         return self.requestisok()
 
     def response(self):
