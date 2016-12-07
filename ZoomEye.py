@@ -21,7 +21,6 @@ class ZoomEye(object):
         else:
             return False
 
-
     def error(self):
         json = self.r.json()
         return "Error:" + str(self.r.status_code) + "\t" + json['error'] + "\n" + json['message'] + "\n" + json['url'] + "\n"
