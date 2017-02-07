@@ -21,7 +21,8 @@ If you have any questions or suggestions, You can submit a new issue.
 
 ## ChangeLog:
 
-2016/12/07 : support python3
-2017/02/07 : update README
-—
+ - 2016/12/07 : support python3
+ - 2017/02/07 : update README
+
+---
 Keep Everything simple.
